@@ -1,4 +1,6 @@
-﻿using ShoppingCart.BL.Dtos.Products;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
+using ShoppingCart.BL.Dtos.Products;
 using ShoppingCart.DAL.Data.Models;
 using ShoppingCart.DAL.Repositorries.UnitOfWork;
 using System;
@@ -17,6 +19,57 @@ public class ProductManager : IProductManager
     {
         _unitOfWork=unitOfWork;
     }
+
+    
+
+    public void Add(AddProductDto addProductDto, string url)
+    {
+        var newproduct = new Product
+        {
+            Name = addProductDto.Name,
+            Category = addProductDto.Category,
+            Price = addProductDto.Price,
+            Quantity = addProductDto.Quantity,
+            URL = url
+        };
+        _unitOfWork.ProductReopsitry.Add(newproduct);
+        _unitOfWork.SaveChanges();
+    }
+
+    public void Delete(int id)
+    {
+        var product = _unitOfWork.ProductReopsitry.GetById(id);
+        if (product == null) { return; }
+        _unitOfWork.ProductReopsitry.Delete(product);
+        _unitOfWork.SaveChanges();
+    }
+
+    public void Edit(UpdateProductDto updateProductDto, string url)
+    {
+        var product = _unitOfWork.ProductReopsitry.GetById(updateProductDto.Id);
+        if (product == null) { return; }
+        //product.Id= updateProductDto.Id;
+        //product.Category= updateProductDto.Category;
+        product.Price= updateProductDto.Price;
+        product.Quantity= updateProductDto.Quantity;
+        product.URL = url;
+        _unitOfWork.ProductReopsitry.Update(product);
+        _unitOfWork.SaveChanges();
+    }
+
+    public void Edit1(UpdateProductDto updateProductDto)
+    {
+        var product = _unitOfWork.ProductReopsitry.GetById(updateProductDto.Id);
+        if (product == null) { return; }
+        //product.Name= updateProductDto.Name;
+        //product.Category= updateProductDto.Category;
+        product.Price = updateProductDto.Price;
+        product.Quantity = updateProductDto.Quantity;
+        //product.URL = url;
+        _unitOfWork.ProductReopsitry.Update(product);
+        _unitOfWork.SaveChanges();
+    }
+
     public IEnumerable<ProductDetailsDto> GetAll()
     {
         var products= _unitOfWork.ProductReopsitry.GetAll();
@@ -61,4 +114,6 @@ public class ProductManager : IProductManager
         });
       
     }
+
+   
 }

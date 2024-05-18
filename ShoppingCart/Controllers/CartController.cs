@@ -34,7 +34,7 @@ public class CartController : ControllerBase
         return Ok(new { Message = "Product Created Successfully" });
 
     }
-    [Authorize]
+    //[Authorize]
     [HttpPut]
     [Route("{id}")]
     public ActionResult  EditCart(int id,EditeCartItemsDot editeCartItemsDot )

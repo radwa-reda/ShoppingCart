@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart;
 using ShoppingCart.DAL.Data.Context;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -80,6 +82,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+#region images
+app.UseCors("all");
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider($"{Environment.CurrentDirectory}\\Images\\"),
+     RequestPath = "/Images"
+}); 
+#endregion
 
 app.UseHttpsRedirection();
 

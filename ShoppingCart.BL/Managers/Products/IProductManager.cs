@@ -1,4 +1,6 @@
-﻿using ShoppingCart.BL.Dtos.Products;
+﻿using Microsoft.AspNetCore.Http;
+using ShoppingCart.BL.Dtos.CartItems;
+using ShoppingCart.BL.Dtos.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,4 +16,9 @@ public interface IProductManager
 
     IEnumerable<ProductDetailsDto> GetProducts(string cateogry, string name);
 
+    void Add(AddProductDto addProductDto ,string url);
+    void Delete(int id);
+
+    void Edit(UpdateProductDto updateProductDto, string url);
+    void Edit1(UpdateProductDto updateProductDto);
 }

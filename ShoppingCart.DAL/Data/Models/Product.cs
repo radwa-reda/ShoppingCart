@@ -13,18 +13,22 @@ public class Product
     public string Category { get; set; } = string.Empty;
     public decimal Price { get; set; }
     public int Quantity { get; set; }
+
+    public string URL { get; set; } = string.Empty;
+
     public Product()
     {
     }
 
     public Product(int id, string name,
-        string category, decimal price, int quantity)
+        string category, decimal price, int quantity,string url)
     {
         Id = id;
         Name = name;
         Category = category;
         Price = price;
         Quantity = quantity;
+        URL = url;
     }
 
 }
