@@ -48,8 +48,6 @@ public class ProductManager : IProductManager
     {
         var product = _unitOfWork.ProductReopsitry.GetById(updateProductDto.Id);
         if (product == null) { return; }
-        //product.Id= updateProductDto.Id;
-        //product.Category= updateProductDto.Category;
         product.Price= updateProductDto.Price;
         product.Quantity= updateProductDto.Quantity;
         product.URL = url;
@@ -80,6 +78,7 @@ public class ProductManager : IProductManager
           Category = p.Category,
           Price = p.Price,
           Quantity = p.Quantity,
+            URL = p.URL
         });
     }
 
@@ -97,6 +96,7 @@ public class ProductManager : IProductManager
             Category = product.Category,
             Price = product.Price,
             Quantity = product.Quantity,
+            URL = product.URL
         };
     }
 

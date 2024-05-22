@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.BL.Dtos.Products;
 using ShoppingCart.BL.Managers.Products;
+using ShoppingCart.DAL.Data.Models;
 
 namespace ShoppingCart.Controllers;
 
@@ -11,18 +13,21 @@ namespace ShoppingCart.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IProductManager _productManager;
+    private readonly ILogger<ProductController> _logger;
 
-    public ProductController(IProductManager productManager)
+    public ProductController(IProductManager productManager, ILogger<ProductController> logger)
     {
         _productManager = productManager;
+        _logger = logger;
     }
-    //[HttpGet]
-    //public ActionResult<IEnumerable<ProductDetailsDto>> GetAll()
-    //{
-    //    var products = _productManager.GetAll();
-    //    return products.ToList();
-    //}
-  //  [Authorize]
+    [HttpGet("getAllProduct")]
+   
+    public ActionResult<IEnumerable<ProductDetailsDto>> GetAll()
+    {
+        var products = _productManager.GetAll();
+        return Ok(products);
+    }
+    //  [Authorize]
     [HttpGet("{id}")]
     public ActionResult<ProductDetailsDto> GetById(int id)
     {
